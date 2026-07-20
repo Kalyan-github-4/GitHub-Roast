@@ -4,8 +4,6 @@
 
 **GitRoast** takes any GitHub username, digs through their public profile — repos, commit messages, languages, contribution graph, that README they haven't touched since 2023 — and generates a brutal (but loving) AI-powered roast. Shareable, meme-able, and painfully accurate.
 
-**Live demo:** [gitroast.kalyanmanna.com](#) · **Built by:** [@Kalyan-github-4](https://github.com/Kalyan-github-4)
-
 ---
 
 ## ✨ Features
