@@ -1,9 +1,10 @@
-# 🔥 GitRoast
+# Next.js template
 
-> Your GitHub profile, absolutely cooked. By AI.
+This is a Next.js template with shadcn/ui.
 
-**GitRoast** takes any GitHub username, digs through their public profile — repos, commit messages, languages, contribution graph, that README they haven't touched since 2023 — and generates a brutal (but loving) AI-powered roast. Shareable, meme-able, and painfully accurate.
+## Adding components
 
+<<<<<<< HEAD
 ---
 
 ## ✨ Features
@@ -51,26 +52,24 @@ Username → GitHub REST API → Profile signal extraction → LLM prompt → Ro
 - An LLM API key
 
 ### Setup
+=======
+To add components to your app, run the following command:
+>>>>>>> 02bdf57 (docs: update project documentation and contribution guidelines)
 
 ```bash
-# Clone
-git clone https://github.com/Kalyan-github-4/gitroast.git
-cd gitroast
-
-# Install
-npm install
-
-# Configure
-cp .env.example .env
+npx shadcn@latest add button
 ```
 
-`.env`:
+This will place the ui components in the `components` directory.
 
-```env
-GITHUB_TOKEN=ghp_xxxx          # optional, recommended
-LLM_API_KEY=your_key_here
-PORT=3001
+## Using components
+
+To use the components in your app, import them as follows:
+
+```tsx
+import { Button } from "@/components/ui/button";
 ```
+<<<<<<< HEAD
 
 ```bash
 # Run both client + server
@@ -144,3 +143,5 @@ MIT © [Kalyan Manna](https://github.com/Kalyan-github-4)
 ---
 
 *Built for fun. If the roast hurt, remember: `git commit -m "fix"` was your choice.*
+=======
+>>>>>>> 02bdf57 (docs: update project documentation and contribution guidelines)
