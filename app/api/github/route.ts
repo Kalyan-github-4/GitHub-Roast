@@ -5,6 +5,11 @@ import { analyzeRepositories } from "@/lib/github/analyzer"
 import { octokit } from "@/lib/github/client"
 import { calculateScores } from "@/lib/github/scoring"
 import type { GitHubProfileAnalysis } from "@/types/github"
+import {
+    generateMainRoast,
+    generateRoastMessages,
+    getDeveloperArchetype,
+} from "@/lib/roast/generator"
 
 const requestSchema = z.object({
     username: z
@@ -142,7 +147,43 @@ export async function POST(request: Request) {
 
             totalStars,
         })
+        const roastContext = {
+            username: user.login,
+            totalRepos: repositories.length,
+            totalStars,
+            originalRepos: originalRepositories.length,
+            forkedRepos: repositories.filter(
+                (repository) => repository.fork,
+            ).length,
+            missingDescriptions:
+                analyzedReposWithoutDescription,
+            missingReadmes:
+                detailedAnalysis.repositoryMetrics.reposWithoutReadme,
+            missingLicenses:
+                detailedAnalysis.repositoryMetrics.reposWithoutLicense,
+            staleRepos:
+                detailedAnalysis.repositoryMetrics.staleRepositories,
+            genericCommitRatio:
+                detailedAnalysis.commitMetrics.genericMessageRatio,
+            conventionalCommitRatio:
+                detailedAnalysis.commitMetrics.conventionalCommitRatio,
+            suspiciousMessages:
+                detailedAnalysis.commitMetrics.suspiciousMessages,
+            topLanguage: topLanguages[0]?.name,
+            overallScore: scores.overall,
+        }
 
+        const roastMessages = generateRoastMessages(
+            roastContext,
+            "brutal",
+            5,
+        )
+
+        const roast = {
+            archetype: getDeveloperArchetype(roastContext),
+            mainMessage: generateMainRoast(roastMessages),
+            messages: roastMessages,
+        }
         const analysis: GitHubProfileAnalysis = {
             profile: {
                 username: user.login,
@@ -194,6 +235,8 @@ export async function POST(request: Request) {
             commits: detailedAnalysis.commitMetrics,
 
             scores,
+
+            roast,
         }
 
         return NextResponse.json({
