@@ -1,147 +1,158 @@
-# Next.js template
+# GitHub Roast 🔥
 
-This is a Next.js template with shadcn/ui.
+GitHub Roast turns any public GitHub profile into a brutally honest developer review.
 
-## Adding components
+Enter a GitHub username, and the app analyzes public profile data such as repositories, activity, languages, coding consistency, commit habits, and overall developer behaviour. It then generates a personalized roast based on the actual GitHub profile.
 
-<<<<<<< HEAD
----
+No random insults. Your own GitHub history provides the material.
 
-## ✨ Features
+> Your code may compile. Your GitHub profile may not survive.
 
-- **One-input experience** — type a username, get roasted. No login, no friction.
-- **AI roast engine** — analyzes real profile signals (repo count vs. stars, fork-to-original ratio, commit message quality, abandoned projects, "config-file languages" like JSON dominating the language chart) and turns them into targeted jokes, not generic insults.
-- **Roast levels** — choose your pain: `Mild 🌶️`, `Medium 🌶️🌶️`, or `No Mercy 🌶️🌶️🌶️`.
-- **Stat highlights card** — the funniest findings (longest-dead repo, most over-engineered README, streak graph shaped like a heart monitor flatline) rendered as a shareable image.
-- **Share to X / LinkedIn / WhatsApp** — one-tap share with an OG image generated per roast.
-- **Compliment mode (hidden)** — for when the roast hits too close to home.
+## How It Works
 
-## 🖼️ Preview
-
-<!-- Add a demo GIF here -->
-![GitRoast demo](./docs/demo.gif)
-
-## 🧠 How It Works
-
-```
-Username → GitHub REST API → Profile signal extraction → LLM prompt → Roast
+```text
+GitHub Username
+      ↓
+GitHub API
+      ↓
+Profile Data Analysis
+      ↓
+AI-Generated Roast
+      ↓
+Developer Score and Insights
 ```
 
-1. **Fetch** — public data via the GitHub REST API: profile, repos, languages, recent events. No OAuth needed for public roasting.
-2. **Extract signals** — a scoring layer computes roast-worthy facts: stale repos, tutorial-clone detection ("todo-app", "netflix-clone"…), commit message entropy ("fix" × 47), star-to-repo ratio, README quality.
-3. **Roast generation** — signals are passed to the LLM with a persona prompt (stand-up comedian who reviews code). The model roasts *facts*, so every joke is verifiable — that's what makes it land.
-4. **Render & share** — roast + stat card rendered client-side; OG image generated server-side for link previews.
+The application:
 
-## 🛠️ Tech Stack
+1. Fetches public GitHub profile and repository data.
+2. Extracts useful developer statistics and coding patterns.
+3. Sends the analyzed data to an AI model.
+4. Generates a funny, personalized GitHub roast.
+5. Displays the roast, scores, and profile insights.
 
-| Layer | Tech |
-|---|---|
-| Frontend | React, TypeScript, Tailwind CSS, Framer Motion |
-| Backend | Node.js, Express, TypeScript |
-| Data | GitHub REST API (unauthenticated + token fallback for rate limits) |
-| AI | LLM API (Gemini / Claude) with a structured roast prompt |
-| OG Images | `@vercel/og` (or `satori` + `resvg`) |
-| Deploy | Vercel (client) + Render / DigitalOcean (API) |
+## Tech Stack
 
-## 🚀 Getting Started
+* **Next.js** — frontend and backend API routes
+* **TypeScript** — type-safe development
+* **React** — user interface
+* **Tailwind CSS** — styling
+* **shadcn/ui** — reusable UI components
+* **GitHub REST API** — public profile and repository data
+* **AI API** — personalized roast generation
+* **Vercel** — deployment
 
-### Prerequisites
+## Run Locally
 
-- Node.js ≥ 20
-- A GitHub personal access token (optional, but raises API rate limits from 60 → 5,000 req/hr)
-- An LLM API key
-
-### Setup
-=======
-To add components to your app, run the following command:
->>>>>>> 02bdf57 (docs: update project documentation and contribution guidelines)
+### 1. Clone the repository
 
 ```bash
-npx shadcn@latest add button
+git clone https://github.com/Kalyan-github-4/GitHub-Roast.git
 ```
 
-This will place the ui components in the `components` directory.
-
-## Using components
-
-To use the components in your app, import them as follows:
-
-```tsx
-import { Button } from "@/components/ui/button";
-```
-<<<<<<< HEAD
+### 2. Open the project
 
 ```bash
-# Run both client + server
+cd GitHub-Roast
+```
+
+### 3. Install dependencies
+
+```bash
+npm install
+```
+
+### 4. Create the environment file
+
+Create a `.env.local` file in the project root:
+
+```env
+GITHUB_TOKEN=your_github_personal_access_token
+AI_API_KEY=your_ai_api_key
+```
+
+Use the exact environment variable names expected inside your project API route.
+
+A GitHub token is recommended because unauthenticated GitHub API requests have lower rate limits.
+
+### 5. Start the development server
+
+```bash
 npm run dev
 ```
 
-Client runs on `http://localhost:5173`, API on `http://localhost:3001`.
+Open the application at:
 
-## 📁 Project Structure
-
-```
-gitroast/
-├── client/               # React + Vite frontend
-│   ├── src/
-│   │   ├── components/   # RoastCard, StatHighlights, ShareBar, LevelPicker
-│   │   ├── hooks/        # useRoast, useGithubProfile
-│   │   └── pages/
-├── server/               # Express API
-│   ├── src/
-│   │   ├── routes/       # POST /api/roast
-│   │   ├── services/     # github.ts (fetch), signals.ts (extract), roast.ts (LLM)
-│   │   └── prompts/      # roast persona + level templates
-└── shared/               # Shared types (RoastSignals, RoastResponse)
+```text
+http://localhost:3000
 ```
 
-## 🔌 API
+## Available Commands
 
-### `POST /api/roast`
+Start the development server:
 
-```json
-{
-  "username": "Kalyan-github-4",
-  "level": "medium"
-}
+```bash
+npm run dev
 ```
 
-**Response:**
+Create a production build:
 
-```json
-{
-  "roast": "47 repos, 3 stars. That's not a portfolio, that's a graveyard with good SEO...",
-  "highlights": [
-    { "label": "Longest abandoned repo", "value": "todo-app-final-v2 (14 months)" },
-    { "label": "Top language", "value": "JSON (config files count, right?)" }
-  ],
-  "shareUrl": "https://gitroast.app/r/abc123"
-}
+```bash
+npm run build
 ```
 
-## ⚖️ Notes on Ethics & Rate Limits
+Run the production build locally:
 
-- Only **public** GitHub data is used. Nothing is stored beyond the generated roast (for share links).
-- Roasts target *coding habits*, never the person — the prompt explicitly bans anything personal, identity-based, or genuinely mean.
-- GitHub API responses are cached (15 min) to stay well within rate limits.
+```bash
+npm run start
+```
 
-## 🗺️ Roadmap
+Run code checks:
 
-- [ ] Roast battles — compare two usernames head-to-head
-- [ ] "Roast my repo" — deep-dive roast of a single repository's code
-- [ ] Voice roast via TTS (ElevenLabs)
-- [ ] Weekly leaderboard of most-roasted profiles (opt-in)
+```bash
+npm run lint
+```
 
-## 🤝 Contributing
+## Production Build
 
-PRs welcome! Open an issue first for feature ideas. Please keep new roast templates funny, not cruel — see `server/src/prompts/GUIDELINES.md`.
+Before deployment, verify that the application builds successfully:
 
-## 📄 License
+```bash
+npm run build
+```
 
-MIT © [Kalyan Manna](https://github.com/Kalyan-github-4)
+Then test the production version locally:
+
+```bash
+npm run start
+```
+
+## Deployment
+
+The project can be deployed directly to Vercel.
+
+1. Push the project to GitHub.
+2. Import the repository into Vercel.
+3. Add the required environment variables.
+4. Keep the framework preset set to **Next.js**.
+5. Leave the output directory empty or set it to the Next.js default.
+6. Deploy the project.
+
+Vercel will automatically run:
+
+```bash
+npm run build
+```
+
+## Privacy
+
+GitHub Roast only analyzes publicly available GitHub information. It does not require access to private repositories.
+
+The project is built for entertainment and developer feedback. Roasts focus on coding activity and GitHub habits rather than personal characteristics.
+
+## License
+
+MIT © Kalyan Manna
 
 ---
 
-*Built for fun. If the roast hurt, remember: `git commit -m "fix"` was your choice.*
-=======
->>>>>>> 02bdf57 (docs: update project documentation and contribution guidelines)
+Built for developers who are brave enough to submit their GitHub username.
