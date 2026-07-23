@@ -1,17 +1,34 @@
-import { Geist, Geist_Mono, Noto_Sans, Playfair_Display } from "next/font/google"
+import { Space_Grotesk, Space_Mono, Syne } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils";
 
-const playfairDisplayHeading = Playfair_Display({subsets:['latin'],variable:'--font-heading'});
+// Syne = brutalist, geometric, personality-packed
+const syneHeading = Syne({
+  subsets: ['latin'],
+  variable: '--font-heading',
+  weight: ['700', '800'],
+});
 
-const notoSans = Noto_Sans({subsets:['latin'],variable:'--font-sans'})
+// Space Grotesk = humanized grotesque, quirky feel
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  weight: ['300', '400', '500', '600', '700'],
+});
 
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-})
+// Space Mono = techy + matches the humanized vibe
+const spaceMono = Space_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  weight: ['400', '700'],
+});
+
+export const metadata = {
+  title: 'GitHub Roast — Your Code Deserves This',
+  description: 'We inspect your GitHub profile, repositories, commit history, and questionable developer decisions. Then we absolutely roast you for it.',
+};
 
 export default function RootLayout({
   children,
@@ -22,7 +39,13 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", notoSans.variable, playfairDisplayHeading.variable)}
+      className={cn(
+        "antialiased",
+        spaceMono.variable,
+        spaceGrotesk.variable,
+        syneHeading.variable,
+        "font-sans"
+      )}
     >
       <body>
         <ThemeProvider>{children}</ThemeProvider>
